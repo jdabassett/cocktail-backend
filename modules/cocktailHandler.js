@@ -71,7 +71,7 @@ cocktailHandler.getRandomCocktails = async (req, res) => {
   let url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
   let returnArray = [];
 
-  console.log("random:", queryNumber);
+  console.log("random: ",queryNumber);
 
   //TODO: remove when ready
   res.status(200).send({ drinks: data_manyCocktails.drinks });
@@ -124,7 +124,7 @@ cocktailHandler.getCocktailsByGlass = (req, res) => {
   let url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?g=${glass}`;
 
   console.log(queryKey);
-  
+
   //TODO: Remove when ready
   res.status(200).send({ drinks: data_by_alcohol.drinks });
 
@@ -153,27 +153,29 @@ cocktailHandler.getCocktailById = (req, res) => {
   let url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
   let queryKey = `getCocktailById:${id}`;
 
-  //TODO: Remove when ready
-  res.status(200).send({ drinks: [data_oneCocktail] });
+  console.log(queryKey);
 
-  // if (cache[queryKey] && Date.now() - cache[queryKey].timestamp < 10000000) {
-  //   console.log('by-id:past');
-  //   res.status(200).send({ drinks: [cache[queryKey].data] });
-  // } else {
-  //   console.log('by-id:now')
-  //   axios
-  //     .get(url)
-  //     .then((response) =>
-  //       new FormateOneCocktail(response.data.drinks[0]).returnFormatedObject()
-  //     )
-  //     .then((formatedResponse) => {
-  //       cache[queryKey] = {};
-  //       cache[queryKey].timestamp = Date.now();
-  //       cache[queryKey].data = formatedResponse;
-  //       res.status(200).send({ drinks: [formatedResponse] });
-  //     })
-  //     .catch((error) => res.status(404).send({ error: error.message }));
-  // }
+  //TODO: Remove when ready
+  // res.status(200).send({ drinks: [data_oneCocktail] });
+
+  if (cache[queryKey] && Date.now() - cache[queryKey].timestamp < 10000000) {
+    console.log('by-id:past');
+    res.status(200).send({ drinks: [cache[queryKey].data] });
+  } else {
+    console.log('by-id:now')
+    axios
+      .get(url)
+      .then((response) =>
+        new FormateOneCocktail(response.data.drinks[0]).returnFormatedObject()
+      )
+      .then((formatedResponse) => {
+        cache[queryKey] = {};
+        cache[queryKey].timestamp = Date.now();
+        cache[queryKey].data = formatedResponse;
+        res.status(200).send({ drinks: [formatedResponse] });
+      })
+      .catch((error) => res.status(404).send({ error: error.message }));
+  }
 };
 
 class FormateOneCocktail {

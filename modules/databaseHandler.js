@@ -18,8 +18,8 @@ databaseHandler.userCocktails = (req,res) => {
 
 databaseHandler.createCocktail = (req, res) => {
   //TODO: must change from query to user once verification is working
-  const createObject = { ...req.body, strUserEmail: req.query.strUserEmail };
-
+  const createObject = { ...req.body, strUserEmail: req.headers.email };
+  console.log("database-post")
   cocktailModel
     .create(createObject)
     .then((response) => res.status(201).send(response))
@@ -27,12 +27,13 @@ databaseHandler.createCocktail = (req, res) => {
 };
 
 databaseHandler.updateCocktail=(req,res)=>{
+  //TODO: must change from query to user once verification is working
   let id = req.params.id;
-  let updateObject = {...req.body,strUserEmail:req.query.strUserEmail};
-
+  let updateObject = {...req.body,strUserEmail: req.headers.email};
+  console.log("database-put")
   cocktailModel
     .findByIdAndUpdate(id,updateObject,{new:true,overwrite:true})
-    .then((response)=> res.status(201).send({drinks:[response]}))
+    .then((response)=> res.status(201).send(response))
     .catch((error)=> res.status(500).send({error:error.message}));
 };
 
