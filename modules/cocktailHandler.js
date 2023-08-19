@@ -71,7 +71,7 @@ cocktailHandler.getRandomCocktails = async (req, res) => {
   let url = "https://www.thecocktaildb.com/api/json/v1/1/random.php";
   let returnArray = [];
 
-  console.log("random: ",queryNumber);
+  console.log("random: ", queryNumber);
 
   //TODO: remove when ready
   res.status(200).send({ drinks: data_manyCocktails.drinks });
@@ -159,10 +159,10 @@ cocktailHandler.getCocktailById = (req, res) => {
   // res.status(200).send({ drinks: [data_oneCocktail] });
 
   if (cache[queryKey] && Date.now() - cache[queryKey].timestamp < 10000000) {
-    console.log('by-id:past');
+    console.log("by-id:past");
     res.status(200).send({ drinks: [cache[queryKey].data] });
   } else {
-    console.log('by-id:now')
+    console.log("by-id:now");
     axios
       .get(url)
       .then((response) =>
@@ -182,8 +182,8 @@ class FormateOneCocktail {
   constructor(resObject) {
     this.idDrink = resObject.idDrink;
     this.strDrink = resObject.strDrink;
-    this.strDrinkAlternate = resObject.strDrinkAlternate;
     this.strGlass = resObject.strGlass;
+    this.strCategory = resObject.strCategory;
     this.strInstructions = resObject.strInstructions;
     this.strDrinkThumb = resObject.strDrinkThumb;
     this.resObject = resObject;
@@ -199,7 +199,7 @@ class FormateOneCocktail {
         : "";
       if (ingredient && ingredient !== "" && ingredient !== null) {
         if (measurement) {
-          returnArray.push(`${measurement.trim()} ${ingredient.trim()}`);
+          returnArray.push(`${measurement.trim()}_${ingredient.trim()}`);
         } else {
           returnArray.push(`${ingredient.trim()}`);
         }
@@ -225,31 +225,15 @@ class FormateOneCocktail {
     return returnArray;
   }
 
-  formateIngredients() {
-    let returnArray = [];
-    for (let i = 1; i < 100; i++) {
-      let ingredient = this.resObject[`strIngredient${i}`];
-
-      if (ingredient && ingredient !== "" && ingredient !== null) {
-          returnArray.push(`${ingredient.trim()}`);
-      } else {
-        break;
-      }
-    }
-    // console.log(returnArray);
-    return returnArray;
-  }
-
   returnFormatedObject() {
     return {
       idDrink: this.idDrink,
       strDrink: this.strDrink || null,
-      strDrinkAlternate: this.strDrinkAlternate || null,
       strGlass: this.strGlass || null,
+      strCategory: this.strCategory || null,
       arrayInstructions: this.formateInstructions() || [],
       strDrinkThumb: this.strDrinkThumb || null,
       arrayMeasuredIngredients: this.formateMeasuredIngredients() || [],
-      arrayIngredients: this.formateIngredients || [],
       strNotes: null,
     };
   }
