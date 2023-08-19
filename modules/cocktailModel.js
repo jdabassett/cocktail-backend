@@ -11,6 +11,7 @@ const cocktailSchema = new mongoose.Schema({
   arrayInstructions:{type:Array, default:null},
   strDrinkThumb:{type:String, default:null},
   arrayMeasuredIngredients:{type:Array, default:null},
+  arrayIngredients:{type:Array, default:null},
   strNotes:{type:String,default:null},
   strUserEmail:{type:String,require:true}
 });

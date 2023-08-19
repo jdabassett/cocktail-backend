@@ -225,6 +225,21 @@ class FormateOneCocktail {
     return returnArray;
   }
 
+  formateIngredients() {
+    let returnArray = [];
+    for (let i = 1; i < 100; i++) {
+      let ingredient = this.resObject[`strIngredient${i}`];
+
+      if (ingredient && ingredient !== "" && ingredient !== null) {
+          returnArray.push(`${ingredient.trim()}`);
+      } else {
+        break;
+      }
+    }
+    // console.log(returnArray);
+    return returnArray;
+  }
+
   returnFormatedObject() {
     return {
       idDrink: this.idDrink,
@@ -234,6 +249,7 @@ class FormateOneCocktail {
       arrayInstructions: this.formateInstructions() || [],
       strDrinkThumb: this.strDrinkThumb || null,
       arrayMeasuredIngredients: this.formateMeasuredIngredients() || [],
+      arrayIngredients: this.formateIngredients || [],
       strNotes: null,
     };
   }

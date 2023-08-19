@@ -8,7 +8,10 @@ const databaseHandler = {};
 
 databaseHandler.userCocktails = (req,res) => {
   //TODO: must change from query to user once verification is working
-  let queryObject = {strUserEmail:req.query.strUserEmail};
+  let queryObject = {strUserEmail:req.headers.email};
+
+  let now=new Date; 
+  console.log('database-getAll',now.toString());
 
   cocktailModel
     .find(queryObject)
