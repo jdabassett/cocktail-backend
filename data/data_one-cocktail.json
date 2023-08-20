@@ -2,6 +2,7 @@
   "idDrink": "17826",
   "strDrink": "The Jimmy Conway",
   "strDrinkAlternate": null,
+  "strCategory":"Cocktail",
   "strGlass": "Whiskey sour glass",
   "arrayInstructions": [
     "Fill glass with ice",
@@ -11,9 +12,9 @@
   ],
   "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/wbcvyo1535794478.jpg",
   "arrayMeasuredIngredients": [
-    "50 ml Irish Whiskey",
-    "50 ml Amaretto",
-    "4 oz Cranberry Juice"
+    "50 ml_Irish Whiskey",
+    "50 ml_Amaretto",
+    "4 oz_Cranberry Juice"
   ],
   "strNotes": null
 }
