@@ -1,14 +1,14 @@
-'use strict'
+"use strict";
 
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
 const cocktailHandler = require("./modules/cocktailHandler.js");
 const databaseHandler = require("./modules/databaseHandler.js");
 
 const PORT = process.env.PORT;
-const MONGODB_KEY = process.env.MONGODB_KEY
+const MONGODB_KEY = process.env.MONGODB_KEY;
 
 const app = express();
 app.use(cors());
@@ -16,31 +16,63 @@ app.use(express.json());
 
 mongoose.connect(MONGODB_KEY);
 const db = mongoose.connection;
-db.on('error',console.error.bind(console,'connection error'));
-db.once('open',()=>console.log("Mongoose is connected!"));
+db.on("error", console.error.bind(console, "connection error"));
+db.once("open", () => console.log("Mongoose is connected!"));
+// const verifyUser = require("./authorize.js");
 
-app.get('/',(req,res)=>{
-  res.status(200).send('Hey your default route is working');
+app.get("/", (req, res) => {
+  res.status(200).send({
+    drinks: [
+      {
+        strDrink: "Vodka Slime",
+        strDrinkThumb:
+          "https://www.thecocktaildb.com/images/media/drink/apex461643588115.jpg",
+        idDrink: "178362",
+      },
+      {
+        strDrink: "Caribbean Orange Liqueur",
+        strDrinkThumb:
+          "https://www.thecocktaildb.com/images/media/drink/qwxuwy1472667570.jpg",
+        idDrink: "12796",
+      },
+      {
+        strDrink: "57 Chevy with a White License Plate",
+        strDrinkThumb:
+          "https://www.thecocktaildb.com/images/media/drink/qyyvtu1468878544.jpg",
+        idDrink: "14029",
+      },
+    ],
+  });
 });
 
-  app.get('/random',cocktailHandler.getRandomCocktail);
+// app.use(verifyUser);
 
-  app.get('/id',cocktailHandler.getCocktailById);
+//general query searches
+app.get("/name", cocktailHandler.getCocktailByName);
 
-  app.get('/alcohol',cocktailHandler.getCocktailByAlcohol);
+app.get("/category", cocktailHandler.getCocktailsByCategory);
 
-  app.get('/userCocktails',databaseHandler.userCocktails);
+app.get("/random", cocktailHandler.getRandomCocktails);
 
-  app.post('/createCocktail',databaseHandler.createCocktail);
+app.get("/ingredient", cocktailHandler.getCocktailsByIngredient);
 
-  app.put('/updateCocktail/:id',databaseHandler.updateCocktail);
+app.get("/glass", cocktailHandler.getCocktailsByGlass);
 
-  app.delete('/deleteCocktail/:id',databaseHandler.deleteCocktail);
+//singular query search
+app.get("/id", cocktailHandler.getCocktailById);
+
+//database queries
+app.get("/userCocktails", databaseHandler.userCocktails);
+
+app.post("/createCocktail", databaseHandler.createCocktail);
+
+app.put("/updateCocktail/:id", databaseHandler.updateCocktail);
+
+app.delete("/deleteCocktail/:id", databaseHandler.deleteCocktail);
 
 //handle errors
 app.use((error, req, res) => {
-  res.status(500).send({error:error.message});
+  res.status(500).send({ error: error.message });
 });
 
-app.listen(PORT,()=> console.log(`listening on ${PORT}`))
-
+app.listen(PORT, () => console.log(`listening on ${PORT}`));
