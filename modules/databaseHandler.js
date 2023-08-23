@@ -15,7 +15,9 @@ databaseHandler.userCocktails = (req,res) => {
 
   cocktailModel
     .find(queryObject)
-    .then(response => res.status(200).send({drinks:response}))
+    .then(response =>{
+      console.log(response);
+      res.status(200).send({drinks:response});})
     .catch(error=> res.status(500).send({error:error.message}))
 };
 
