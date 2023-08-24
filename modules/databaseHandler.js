@@ -16,7 +16,7 @@ databaseHandler.userCocktails = (req,res) => {
   cocktailModel
     .find(queryObject)
     .then(response =>{
-      console.log(response);
+      // console.log(response);
       res.status(200).send({drinks:response});})
     .catch(error=> res.status(500).send({error:error.message}))
 };
@@ -45,6 +45,7 @@ databaseHandler.updateCocktail=(req,res)=>{
 databaseHandler.deleteCocktail=(req,res)=>{
   let id = req.params.id;
 
+  console.log('database-delete',id);
   cocktailModel
     .findByIdAndDelete(id)
     .then(response=>res.status(204).send(response))

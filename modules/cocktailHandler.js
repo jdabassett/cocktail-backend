@@ -5,6 +5,7 @@ const data_oneCocktail = require("../data/data_one-cocktail.json");
 const data_manyCocktails = require("../data/data_mult-cocktail.json");
 const data_by_alcohol = require("../data/data_by-alcohol.json");
 const cache = require("./cache.js");
+const nanoid = require('nanoid');
 
 const cocktailHandler = {};
 
@@ -199,9 +200,9 @@ class FormateOneCocktail {
         : "";
       if (ingredient && ingredient !== "" && ingredient !== null) {
         if (measurement) {
-          returnArray.push(`${measurement.trim()}_${ingredient.trim()}`);
+          returnArray.push({unit:measurement.trim(),ingredient:ingredient.trim(),id:nanoid()});
         } else {
-          returnArray.push(`${ingredient.trim()}`);
+          returnArray.push({unit:null,ingredient:ingredient.trim(),id:nanoid()});
         }
       } else {
         break;
@@ -217,9 +218,10 @@ class FormateOneCocktail {
     if (regex.test(this.strInstructions)) {
       returnArray = this.strInstructions
         .split("\r\n")
-        .filter((item) => item.trim().length !== 0);
+        .filter((item) => item.trim().length !== 0)
+        .map(item => ({instruction:item,id:nanoid()}))
     } else {
-      returnArray = [this.strInstructions];
+      returnArray = [{instruction:this.strInstructions,id:nanoid()}];
     }
     // console.log(this.strInstructions);
     return returnArray;
