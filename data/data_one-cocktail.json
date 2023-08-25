@@ -1,16 +1,46 @@
 {
-  "idDrink": "1000000",
-  "strDrink": "T am a placeholder",
-  "strCategory":"Here is my category",
-  "strGlass": "Short and stout",
+  "idDrink": "11558",
+  "strDrink": "Japanese Fizz",
+  "strGlass": "Highball glass",
+  "strCategory": "Ordinary Drink",
   "arrayInstructions": [
-    "Here are my instructions"
+    {
+      "instruction": "Shake all ingredients (except carbonated water) with ice and strain into a highball glass over two ice cubes. Fill with carbonated water, stir, and serve.",
+      "id": "3qK1JiaGMdwRS9pHwCOc6"
+    }
   ],
-  "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/wbcvyo1535794478.jpg",
+  "strDrinkThumb": "https://www.thecocktaildb.com/images/media/drink/37vzv11504884831.jpg",
   "arrayMeasuredIngredients": [
-    "Here are my ingredients"
+    {
+      "unit": "1 1/2 oz",
+      "ingredient": "Blended whiskey",
+      "id": "gySKriLDS7PnQm4heggkn"
+    },
+    {
+      "unit": "Juice of 1/2",
+      "ingredient": "Lemon",
+      "id": "1TlZfCsf7SlX7aCBBC0LQ"
+    },
+    {
+      "unit": "1 tsp",
+      "ingredient": "Powdered sugar",
+      "id": "kpBwlb9wKj1gWq-O8qvIs"
+    },
+    {
+      "unit": "1 tblsp",
+      "ingredient": "Port",
+      "id": "L_UECF525ATKoQzfEOTWi"
+    },
+    {
+      "unit": "1",
+      "ingredient": "Egg white",
+      "id": "YDZJi690KzRWrlduzhHKK"
+    },
+    {
+      "unit": null,
+      "ingredient": "Carbonated water",
+      "id": "x8FaUIOVpAW2-Vvcq6aDy"
+    }
   ],
-  "strNotes": "Read me over adn fill me out!",
-  "strUserEmail":"jacobbassett@gmail.com"
+  "strNotes": null
 }
-
