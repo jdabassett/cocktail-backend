@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const cocktailHandler = require("./modules/cocktailHandler.js");
 const databaseHandler = require("./modules/databaseHandler.js");
+const verifyUser = require("./authorize.js");
 
 const PORT = process.env.PORT;
 const MONGODB_KEY = process.env.MONGODB_KEY;
@@ -18,7 +19,7 @@ mongoose.connect(MONGODB_KEY);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", () => console.log("Mongoose is connected!"));
-// const verifyUser = require("./authorize.js");
+
 
 app.get("/", (req, res) => {
   res.status(200).send({
@@ -45,7 +46,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// app.use(verifyUser);
+app.use(verifyUser);
 
 //general query searches
 app.get("/name", cocktailHandler.getCocktailByName);
