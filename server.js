@@ -11,7 +11,7 @@ const verifyUser = require("./authorize.js");
 const PORT = process.env.PORT;
 const MONGODB_KEY = process.env.MONGODB_KEY;
 
-var whitelist = ['http://localhost:3000/', 'https://thriving-crisp-134854.netlify.app/']
+var whitelist = ['http://localhost:3000/','http://localhost:3001/', 'https://thriving-crisp-134854.netlify.app/'];
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -20,7 +20,7 @@ var corsOptions = {
       callback(new Error('Not allowed by CORS'))
     }
   }
-}
+};
 
 const app = express();
 app.use(cors());
