@@ -17,26 +17,26 @@ cocktailHandler.getCocktailByName = (req, res) => {
   console.log(queryKey);
 
   //TODO: remove when ready
-  res.status(200).send({ drinks: data_manyCocktails.drinks });
+  // res.status(200).send({ drinks: data_manyCocktails.drinks });
 
-  // if (cache[queryKey] && Date.now() - cache[queryKey].timestamp < 10000000) {
-  //   console.log('by-name:past');
-  //   res.status(200).send({ drinks: [cache[queryKey].data] });
-  // } else {
-  //   console.log('by-name:now')
-  //   axios
-  //     .get(url)
-  //     .then((response) =>
-  //       new FormateOneCocktail(response.data.drinks[0]).returnFormatedObject()
-  //     )
-  //     .then((formatedResponse) => {
-  //       cache[queryKey] = {};
-  //       cache[queryKey].timestamp = Date.now();
-  //       cache[queryKey].data = formatedResponse;
-  //       res.status(200).send({ drinks: [formatedResponse] });
-  //     })
-  //     .catch((error) => res.status(404).send({ error: error.message }));
-  // }
+  if (cache[queryKey] && Date.now() - cache[queryKey].timestamp < 10000000) {
+    console.log('by-name:past');
+    res.status(200).send({ drinks: [cache[queryKey].data] });
+  } else {
+    console.log('by-name:now')
+    axios
+      .get(url)
+      .then((response) =>
+        new FormateOneCocktail(response.data.drinks[0]).returnFormatedObject()
+      )
+      .then((formatedResponse) => {
+        cache[queryKey] = {};
+        cache[queryKey].timestamp = Date.now();
+        cache[queryKey].data = formatedResponse;
+        res.status(200).send({ drinks: [formatedResponse] });
+      })
+      .catch((error) => res.status(404).send({ error: error.message }));
+  }
 };
 
 cocktailHandler.getCocktailsByCategory = (req, res) => {
@@ -47,23 +47,23 @@ cocktailHandler.getCocktailsByCategory = (req, res) => {
   console.log(queryKey);
 
   //TODO: remove when ready
-  res.status(200).send({ drinks: data_by_alcohol.drinks });
+  // res.status(200).send({ drinks: data_by_alcohol.drinks });
 
-  // if (cache[queryKey] && Date.now() - cache[queryKey].timestamp < 10000000) {
-  //   console.log('by-category:past');
-  //   res.status(200).send({ drinks: [cache[queryKey].data] });
-  // } else {
-  //   console.log('by-category:now')
-  //   axios
-  //     .get(url)
-  //     .then(response => {
-  //       cache[queryKey] = {};
-  //       cache[queryKey].timestamp = Date.now();
-  //       cache[queryKey].data = response.data.drinks;
-  //       res.status(200).send({ drinks: response.data.drinks });
-  //     })
-  //     .catch((error) => res.status(404).send({ error: error.message }));
-  // }
+  if (cache[queryKey] && Date.now() - cache[queryKey].timestamp < 10000000) {
+    console.log('by-category:past');
+    res.status(200).send({ drinks: [cache[queryKey].data] });
+  } else {
+    console.log('by-category:now')
+    axios
+      .get(url)
+      .then(response => {
+        cache[queryKey] = {};
+        cache[queryKey].timestamp = Date.now();
+        cache[queryKey].data = response.data.drinks;
+        res.status(200).send({ drinks: response.data.drinks });
+      })
+      .catch((error) => res.status(404).send({ error: error.message }));
+  }
 };
 
 cocktailHandler.getRandomCocktails = async (req, res) => {
@@ -75,18 +75,18 @@ cocktailHandler.getRandomCocktails = async (req, res) => {
   console.log("random: ", queryNumber);
 
   //TODO: remove when ready
-  res.status(200).send({ drinks: data_manyCocktails.drinks });
+  // res.status(200).send({ drinks: data_manyCocktails.drinks });
 
-  // try {
-  //   for (let i=0; i<queryNumber; i++) {
-  //     let response = await axios.get(url)
-  //     let formatted = new FormateOneCocktail(response.data.drinks[0]).returnFormatedObject();
-  //     returnArray.push(formatted);
-  //   };
-  //   res.status(200).send({drinks:returnArray})
-  // } catch (error) {
-  //   res.status(404).send({error:error.message})
-  // }
+  try {
+    for (let i=0; i<queryNumber; i++) {
+      let response = await axios.get(url)
+      let formatted = new FormateOneCocktail(response.data.drinks[0]).returnFormatedObject();
+      returnArray.push(formatted);
+    };
+    res.status(200).send({drinks:returnArray})
+  } catch (error) {
+    res.status(404).send({error:error.message})
+  }
 };
 
 cocktailHandler.getCocktailsByIngredient = (req, res) => {
@@ -97,26 +97,26 @@ cocktailHandler.getCocktailsByIngredient = (req, res) => {
   console.log(queryKey);
 
   //TODO: Remove when ready
-  res.status(200).send({ drinks: data_by_alcohol.drinks });
+  // res.status(200).send({ drinks: data_by_alcohol.drinks });
 
-  // if (
-  //   cache[queryKey] &&
-  //   Date.now() - cache[queryKey].timestamp < 10000000
-  // ) {
-  //   console.log("by-ingredient:past");
-  //   res.status(200).send({drinks:cache[queryKey].data})
-  // } else {
-  //   console.log("by-ingredient:now");
-  //   axios
-  //     .get(url)
-  //     .then((response) => {
-  //       cache[queryKey] = {};
-  //       cache[queryKey].timestamp = Date.now();
-  //       cache[queryKey].data = response.data.drinks;
-  //       res.status(200).send({drinks:response.data.drinks})
-  //     })
-  //     .catch((error) => res.status(404).send({ error: error.message }));
-  // };
+  if (
+    cache[queryKey] &&
+    Date.now() - cache[queryKey].timestamp < 10000000
+  ) {
+    console.log("by-ingredient:past");
+    res.status(200).send({drinks:cache[queryKey].data})
+  } else {
+    console.log("by-ingredient:now");
+    axios
+      .get(url)
+      .then((response) => {
+        cache[queryKey] = {};
+        cache[queryKey].timestamp = Date.now();
+        cache[queryKey].data = response.data.drinks;
+        res.status(200).send({drinks:response.data.drinks})
+      })
+      .catch((error) => res.status(404).send({ error: error.message }));
+  };
 };
 
 cocktailHandler.getCocktailsByGlass = (req, res) => {
@@ -127,26 +127,26 @@ cocktailHandler.getCocktailsByGlass = (req, res) => {
   console.log(queryKey);
 
   //TODO: Remove when ready
-  res.status(200).send({ drinks: data_by_alcohol.drinks });
+  // res.status(200).send({ drinks: data_by_alcohol.drinks });
 
-  // if (
-  //   cache[queryKey] &&
-  //   Date.now() - cache[queryKey].timestamp < 10000000
-  // ) {
-  //   console.log("by-glass:past");
-  //   res.status(200).send({drinks:cache[queryKey].data})
-  // } else {
-  //   console.log("by-glass:now");
-  //   axios
-  //     .get(url)
-  //     .then((response) => {
-  //       cache[queryKey] = {};
-  //       cache[queryKey].timestamp = Date.now();
-  //       cache[queryKey].data = response.data.drinks;
-  //       res.status(200).send({drinks:response.data.drinks})
-  //     })
-  //     .catch((error) => res.status(404).send({ error: error.message }));
-  // };
+  if (
+    cache[queryKey] &&
+    Date.now() - cache[queryKey].timestamp < 10000000
+  ) {
+    console.log("by-glass:past");
+    res.status(200).send({drinks:cache[queryKey].data})
+  } else {
+    console.log("by-glass:now");
+    axios
+      .get(url)
+      .then((response) => {
+        cache[queryKey] = {};
+        cache[queryKey].timestamp = Date.now();
+        cache[queryKey].data = response.data.drinks;
+        res.status(200).send({drinks:response.data.drinks})
+      })
+      .catch((error) => res.status(404).send({ error: error.message }));
+  };
 };
 
 cocktailHandler.getCocktailById = (req, res) => {
